@@ -1,0 +1,26 @@
+version: '3'
+services:
+  wordpress:
+    image: wordpress
+    container_name: my-wordpress
+    environment:
+      WORDPRESS_DB_USER: user
+      WORDPRESS_DB_PASSWORD: 8437
+      WORDPRESS_DB_NAME: wordpress
+    links:
+      - db:mysql
+    ports:
+      - 80:80
+    volumes:
+      - ./data/blog/html/:/var/www/html
+    restart: always
+  db:
+    image: mariadb
+    container_name: www-mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: 8437
+      MYSQL_PASSWORD: user
+      MYSQL_USER: user
+    volumes:
+      - ./data/blog/mysql/:/var/lib/mysql
+    restart: always
