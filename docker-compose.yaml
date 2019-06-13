@@ -4,8 +4,8 @@ services:
     image: wordpress
     container_name: my-wordpress
     environment:
-      WORDPRESS_DB_USER: user
-      WORDPRESS_DB_PASSWORD: 8437
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: developer
       WORDPRESS_DB_NAME: wordpress
     links:
       - db:mysql
@@ -13,14 +13,15 @@ services:
       - 80:80
     volumes:
       - ./data/blog/html/:/var/www/html
+    depends_on:
+      - db
     restart: always
   db:
     image: mariadb
     container_name: www-mariadb
     environment:
-      MYSQL_ROOT_PASSWORD: 8437
-      MYSQL_PASSWORD: user
-      MYSQL_USER: user
+      MYSQL_DATABASE: wordpress
+      MYSQL_ROOT_PASSWORD: developer
     volumes:
       - ./data/blog/mysql/:/var/lib/mysql
     restart: always
